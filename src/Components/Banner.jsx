@@ -12,7 +12,6 @@ const Banner = () => {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
       >
-        {/* Text Section */}
         <div className="md:w-1/2 text-center md:text-left">
           <h1 className="lg:text-6xl text-4xl font-bold">
             Getting <span className="text-blue-500">Quality</span> Education Is
@@ -31,7 +30,7 @@ const Banner = () => {
         {/* Image Section */}
         <div className="md:w-1/2 flex justify-center mt-6 md:mt-0 relative">
             <img
-              src="https://i.ibb.co.com/bQ4f2Dm/images.jpg" // Replace with your image link
+              src="https://i.ibb.co.com/bQ4f2Dm/images.jpg" 
               alt="Student"
             />
         </div>
