@@ -65,7 +65,7 @@ const FindTutors = () => {
             </div>
 
             {/* Tutors Grid */}
-            <div className="grid lg:grid-cols-3 grid-cols-1 gap-4">
+            <div className="grid lg:grid-cols-4 grid-cols-1 gap-4">
                 {filteredTutors.length > 0 ? (
                     filteredTutors.map((tutor) => (
                         <div
