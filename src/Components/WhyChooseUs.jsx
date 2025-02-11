@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 function WhyChooseUs() {
   return (
     <section className="bg-gradient-to-br from-blue-600 via-purple-500 to-indigo-600 py-16 px-6 sm:px-12 lg:px-20 text-white">
-      <div className="max-w-7xl mx-auto">
+      <div className='p-6'>
         <motion.h2
           className="text-4xl sm:text-5xl font-bold text-center mb-12"
           initial={{ opacity: 0, y: -50 }}
