@@ -10,15 +10,11 @@ const MyTutorials = () => {
 
     useEffect(() => {
         if (user && user.email) {
-            // fetch(`https://tutor-hive-sever.vercel.app/tutors/email/${user.email}`)
-            //     .then(res => res.json())
-            //     .then(data => setTutorials(data))
-            //     .catch(err => console.error(err));
-
-            axios.get(`https://tutor-hive-sever.vercel.app/tutors/email/${user.email}`, {
-                withCredentials: true
-            })
-            .then(res => setTutorials(res.data))
+            axios
+                .get(`https://tutor-hive-sever.vercel.app/tutors/email/${user.email}`, {
+                    withCredentials: true,
+                })
+                .then((res) => setTutorials(res.data));
         }
     }, [user]);
 
@@ -52,49 +48,60 @@ const MyTutorials = () => {
 
     return (
         <div className="p-6">
-            <h1 className="text-2xl font-bold mb-4">My Tutorials</h1>
+            <h1 className="text-3xl font-bold text-white mb-8 text-center">
+                My Tutorials
+            </h1>
             {tutorials.length > 0 ? (
-                <div className="overflow-x-auto">
-                    <table className="table-auto w-full border-collapse border border-gray-300">
-                        <thead>
-                            <tr className="bg-gray-200">
-                                <th className="border border-gray-300 p-2">Name</th>
-                                <th className="border border-gray-300 p-2">Image</th>
-                                <th className="border border-gray-300 p-2">Language</th>
-                                <th className="border border-gray-300 p-2">Price</th>
-                                <th className="border border-gray-300 p-2">Description</th>
-                                <th className="border border-gray-300 p-2">Review</th>
-                                <th className="border border-gray-300 p-2">Actions</th>
+                <div className="overflow-x-auto rounded-lg shadow-lg bg-white">
+                    <table className="table-auto w-full border-collapse">
+                        <thead className="bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+                            <tr>
+                                <th className="border px-4 py-2">Name</th>
+                                <th className="border px-4 py-2">Image</th>
+                                <th className="border px-4 py-2">Language</th>
+                                <th className="border px-4 py-2">Price</th>
+                                <th className="border px-4 py-2">Description</th>
+                                <th className="border px-4 py-2">Review</th>
+                                <th className="border px-4 py-2">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {tutorials.map((tutorial) => (
-                                <tr key={tutorial._id} className="hover:bg-gray-100">
-                                    <td className="border border-gray-300 p-2">{tutorial.lecturer.userName}</td>
-                                    <td className="border border-gray-300">
+                            {tutorials.map((tutorial, index) => (
+                                <tr
+                                    key={tutorial._id}
+                                    className={`hover:bg-gray-100 transition duration-300 ${index % 2 === 0 ? "bg-gray-50" : "bg-white"}`}
+                                >
+                                    <td className="border px-4 py-2 text-lg font-medium">
+                                        {tutorial.lecturer.userName}
+                                    </td>
+                                    <td className="border px-4 py-2">
                                         <img
                                             src={tutorial.Image}
                                             alt={tutorial.name}
-                                            className="w-20 h-20 object-cover"
+                                            className="w-20 h-20 object-cover rounded-lg shadow-md"
                                         />
                                     </td>
-                                    <td className="border border-gray-300 p-2">{tutorial.category}</td>
-                                    <td className="border border-gray-300 p-2">BDT {tutorial.price}</td>
-                                    <td className="border border-gray-300 p-2">{tutorial.description}</td>
-                                    <td className="border border-gray-300 text-red-400 text-center">({tutorial.review})</td>
-                                    <td className="border border-gray-300 p-2 flex justify-around">
-                                        <Link
-                                            to={`/update-tutorial/${tutorial._id}`}
-                                            className="btn btn-sm btn-primary"
-                                        >
-                                            Update
-                                        </Link>
-                                        <button
-                                            onClick={() => handleDelete(tutorial._id)}
-                                            className="btn btn-sm btn-danger"
-                                        >
-                                            Delete
-                                        </button>
+                                    <td className="border px-4 py-2 text-center">{tutorial.category}</td>
+                                    <td className="border px-4 py-2 text-center">BDT {tutorial.price}</td>
+                                    <td className="border px-4 py-2 text-center">{tutorial.description}</td>
+                                    <td className="border px-4 py-2 text-center text-red-400 font-semibold">
+                                        ({tutorial.review})
+                                    </td>
+                                    <td className="border px-4 py-2 text-center">
+                                        <div className="flex justify-center gap-4">
+                                            <Link
+                                                to={`/update-tutorial/${tutorial._id}`}
+                                                className="text-blue-600 hover:text-blue-800 transition-colors duration-300 font-semibold"
+                                            >
+                                                Update
+                                            </Link>
+                                            <button
+                                                onClick={() => handleDelete(tutorial._id)}
+                                                className="text-red-600 hover:text-red-800 transition-colors duration-300 font-semibold"
+                                            >
+                                                Delete
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             ))}
@@ -108,4 +115,4 @@ const MyTutorials = () => {
     );
 };
 
-export default MyTutorials;
+export default MyTutorials;
