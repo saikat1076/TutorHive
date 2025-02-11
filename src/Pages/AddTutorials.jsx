@@ -64,8 +64,8 @@ const AddTutorials = () => {
     };
 
     return (
-        <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6 mt-10">
-            <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">Add Tutorials</h1>
+        <div className="mx-auto bg-white shadow-lg rounded-lg p-6 mt-10">
+            <h1 className="text-4xl font-bold text-center text-gray-800 mb-6">Add Tutorials</h1>
             <form onSubmit={handleSubmit} className="space-y-6">
 
 
