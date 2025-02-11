@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 
 const ErrorPage = () => {
   return (
-    <div className="flex justify-center items-center h-screen bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-600">
-      <div className="text-center p-8 bg-white shadow-2xl rounded-lg opacity-90 w-3/4 md:w-1/2 lg:w-1/3">
+    <div className="flex justify-center items-center ">
+      <div className="text-center p-8 bg-white rounded-lg opacity-90 w-full">
         {/* Image with DaisyUI Card component */}
         <div className="mb-4">
           <img
-            src="https://via.placeholder.com/150"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmWru8q17zpOzzzT1s475ZS_8fOL1GS0teSw&s"
             alt="Error Illustration"
-            className="rounded-full mx-auto shadow-lg"
+            className="mx-auto"
           />
         </div>
 
