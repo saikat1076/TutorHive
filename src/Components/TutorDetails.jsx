@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { FaYoutube } from "react-icons/fa";
+import { FaYoutube, FaStar } from "react-icons/fa";
 import { AuthContext } from "../Provider/AuthProvider";
 import Swal from "sweetalert2";
 import Loading from "./Loading";
+import { motion } from "framer-motion";
 
 function TutorDetails() {
     const { user } = useContext(AuthContext);
@@ -40,62 +41,74 @@ function TutorDetails() {
 
             const data = await response.json();
             if (data.insertedId) {
-               Swal.fire("Success", "Tutor booking successfully!", "success");
+                Swal.fire("Success", "Tutor booked successfully!", "success");
             }
-        }
-        catch (error) {
-             Swal.fire("Error", "Failed to booking tutor.", "error");;
+        } catch (error) {
+            Swal.fire("Error", "Failed to book tutor.", "error");
         }
     };
 
-    if (!tutor) return <p><Loading></Loading></p>;
+    if (!tutor) return <Loading />;
 
     return (
-        <div className="p-6 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
-            <div className="max-w-md mx-auto bg-white rounded-xl shadow-2xl overflow-hidden transform hover:scale-105 transition-transform duration-500">
-                <div className="relative">
-                    
-                    <img
-                        src={tutor.Image}
-                        alt={tutor.lecturer.userName}
-                        className="w-full h-64 object-cover rounded-t-xl transform hover:scale-110 transition-all duration-300"
-                    />
-                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-5xl cursor-pointer">
-                        <FaYoutube className="text-red-600" />
+        <section className="min-h-screen py-10 px-4 sm:px-6 lg:px-16 bg-gradient-to-br from-indigo-100 to-white">
+            <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="max-w-4xl mx-auto bg-white shadow-2xl rounded-xl overflow-hidden"
+            >
+                <div className="grid grid-cols-1 md:grid-cols-2">
+                    <div className="relative">
+                        <img
+                            src={tutor.Image}
+                            alt={tutor.lecturer.userName}
+                            className="h-full w-full object-cover"
+                        />
+                        <div className="absolute top-4 right-4">
+                            <FaYoutube className="text-red-600 text-4xl cursor-pointer hover:scale-110 transition" />
+                        </div>
+                    </div>
+                    <div className="p-6 flex flex-col justify-between">
+                        <div>
+                            <div className="flex items-center gap-4 mb-4">
+                                <img
+                                    src={tutor.lecturer.photo}
+                                    alt={tutor.lecturer.userName}
+                                    className="w-14 h-14 rounded-full border-2 border-indigo-500"
+                                />
+                                <h2 className="text-3xl font-bold text-gray-800">
+                                    {tutor.lecturer.userName}
+                                </h2>
+                            </div>
+                            <p className="text-gray-600 text-base mb-4">
+                                {tutor.description}
+                            </p>
+                            <div className="flex justify-between text-lg font-semibold text-gray-700 mb-3">
+                                <p><span className="text-indigo-600">Language:</span> {tutor.category}</p>
+                                <p><span className="text-indigo-600">Price:</span> BDT {tutor.price}</p>
+                            </div>
+                            <div className="flex items-center text-yellow-500 text-lg mb-4">
+                                {[...Array(5)].map((_, i) => (
+                                    <FaStar key={i} />
+                                ))}
+                                <span className="ml-2 text-sm text-gray-500">
+                                    ({tutor.review} reviews)
+                                </span>
+                            </div>
+                        </div>
+                        <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={handleBook}
+                            className="mt-4 w-full bg-indigo-600 text-white py-3 rounded-lg shadow-lg hover:bg-indigo-700 transition duration-300"
+                        >
+                            Book This Tutor
+                        </motion.button>
                     </div>
                 </div>
-                <div className="p-3">
-                    <div className="flex flex-row gap-2 p-0 m-0">
-                    <img
-                        src={tutor.lecturer.photo}
-                        alt={tutor.lecturer.userName}
-                        className="w-12 h-12 rounded-full object-cover border-white shadow-lg"
-                    />
-                    <h1 className="text-4xl font-bold text-gray-800 hover:text-blue-500 transition-colors duration-300">{tutor.lecturer.userName}</h1>
-                    </div>
-
-                    
-                    <p className="text-lg text-gray-700 mt-4">{tutor.description}</p>
-                    <div className="flex justify-between items-center mt-4">
-                        <p className="text-xl font-semibold text-gray-800">Language: {tutor.category}</p>
-                        <p className="text-xl font-semibold text-gray-800">Price: BDT {tutor.price}</p>
-                    </div>
-                    <div className="flex items-center mt-4">
-                        <span className="text-yellow-500 text-xl">Rating:</span>
-                        {[...Array(5)].map((_, index) => (
-                            <span key={index} className="text-yellow-500 text-xl">&#9733;</span>
-                        ))}
-                        <span className="ml-2 text-sm text-gray-500">({tutor.review} reviews)</span>
-                    </div>
-                    <button
-                        onClick={handleBook}
-                        className="btn bg-blue-600 text-white w-full py-3 rounded-lg mt-6 hover:bg-blue-700 transition duration-300 transform hover:scale-105"
-                    >
-                        Book Tutor
-                    </button>
-                </div>
-            </div>
-        </div>
+            </motion.div>
+        </section>
     );
 }
 
