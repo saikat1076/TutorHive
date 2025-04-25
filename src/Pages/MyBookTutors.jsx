@@ -12,7 +12,7 @@ function MyBookedTutors() {
     useEffect(() => {
         const fetchBookedTutors = async () => {
             if (!user?.email) {
-                setLoading(false); // Stop loading if user is undefined
+                setLoading(false); 
                 return;
             }
 
@@ -25,7 +25,7 @@ function MyBookedTutors() {
             } catch (error) {
                 console.error("Error fetching booked tutors:", error);
             } finally {
-                setLoading(false); // End loading state
+                setLoading(false); 
             }
         };
 
@@ -33,10 +33,10 @@ function MyBookedTutors() {
     }, [user.email]);
 
     const handleAddReview = async (tutorId, currentReviewCount) => {
-        // Increase review count by 1 if it's 0
+      0
         const newReviewCount = currentReviewCount === 0 ? 1 : currentReviewCount;
 
-        // Show SweetAlert2 modal for review (input box)
+     
         const { value: review } = await Swal.fire({
             title: 'Add Your Review',
             input: 'textarea',
@@ -55,19 +55,19 @@ function MyBookedTutors() {
         });
 
         if (review) {
-            // If a review was entered, show success message
+          
             Swal.fire('Success', 'Your review has been added!', 'success');
             
-            // Increment the review count (from 0 to 1)
+          
             setBookedTutors((prevTutors) =>
                 prevTutors.map((tutor) =>
                     tutor._id === tutorId
-                        ? { ...tutor, review: newReviewCount } // Update review count on card
+                        ? { ...tutor, review: newReviewCount } 
                         : tutor
                 )
             );
         } else {
-            // If the user cancels, no changes are made
+           
             Swal.fire('Cancelled', 'Your review was not submitted.', 'info');
         }
     };
