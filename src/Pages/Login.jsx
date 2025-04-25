@@ -7,92 +7,101 @@ import 'react-toastify/dist/ReactToastify.css';
 import { AuthContext } from '../Provider/AuthProvider';
 
 const Login = () => {
-    // Access AuthContext values
     const { userLogin, setUser, handleGoogleLogin } = useContext(AuthContext);
     const location = useLocation();
     const navigate = useNavigate();
 
-    // State for toggling password visibility
     const [showPassword, setShowPassword] = useState(false);
 
-    // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const form = e.target;
-        const email = form.email.value;
-        const password = form.password.value;
+        const email = e.target.email.value;
+        const password = e.target.password.value;
 
         try {
             const result = await userLogin(email, password);
-            const user = result.user;
-            setUser(user);
-            toast.success("Login Successful!", { position: "top-center" });
+            setUser(result.user);
+            toast.success("Login Successful!");
             navigate(location?.state?.from || "/");
         } catch (error) {
-            toast.warning("Incorrect information. Please try again.", { position: "top-center" });
+            toast.warning("Incorrect information. Please try again.");
         }
     };
 
-    // Handle Google login
     const handleGoogle = async () => {
         try {
             await handleGoogleLogin();
             navigate(location?.state?.from || "/");
         } catch (error) {
-            toast.error("Google login failed. Please try again.", { position: "top-center" });
+            toast.error("Google login failed.");
         }
     };
 
     return (
-        <div className='min-h-screen flex justify-center items-center'>
-            <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-                <h2 className="text-2xl font-semibold text-center">Login to your account</h2>
-                <form onSubmit={handleSubmit} className="card-body">
-                    <div className="form-control">
-                        <label className="label">
-                            <span className="label-text">Email</span>
-                        </label>
-                        <input name='email' type="email" placeholder="email" className="input input-bordered" required />
-                    </div>
-                    <div className="form-control relative">
-                        <label className="label">
-                            <span className="label-text">Password</span>
-                        </label>
+        <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center p-6">
+            <div className="backdrop-blur-lg bg-white/20 border border-white/30 rounded-2xl shadow-2xl w-full max-w-md p-8">
+                <h2 className="text-3xl font-bold text-white text-center mb-6">Welcome Back</h2>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                    <div>
+                        <label className="block text-white mb-1">Email</label>
                         <input
-                            name='password'
+                            type="email"
+                            name="email"
+                            placeholder="you@example.com"
+                            className="w-full px-4 py-2 rounded-lg bg-white/80 text-gray-900 border focus:outline-none focus:ring-2 focus:ring-indigo-300"
+                            required
+                        />
+                    </div>
+                    <div className="relative">
+                        <label className="block text-white mb-1">Password</label>
+                        <input
                             type={showPassword ? "text" : "password"}
-                            placeholder="password"
-                            className="input input-bordered"
+                            name="password"
+                            placeholder="••••••••"
+                            className="w-full px-4 py-2 rounded-lg bg-white/80 text-gray-900 border focus:outline-none focus:ring-2 focus:ring-indigo-300"
                             required
                         />
                         <button
                             type="button"
                             onClick={() => setShowPassword(!showPassword)}
-                            className="absolute right-3 top-12 text-xl"
+                            className="absolute right-3 top-9 text-xl text-gray-700"
                         >
                             {showPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
                         </button>
-                        <label className="label">
-                            <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
-                        </label>
                     </div>
-                    <div className="form-control mt-6">
-                        <button className="btn btn-primary">Login</button>
+                    <div className="flex justify-between text-sm text-white">
+                        <span></span>
+                        <a href="#" className="hover:underline">Forgot password?</a>
                     </div>
-                    <div className="divider">OR</div>
                     <button
-                        type="button"
-                        onClick={handleGoogle}
-                        className='btn bg-black text-white text-xl flex items-center gap-2'
+                        type="submit"
+                        className="w-full bg-indigo-600 hover:bg-indigo-700 transition-colors text-white py-2 rounded-lg font-semibold"
                     >
-                        <FcGoogle /> Google Login
+                        Login
                     </button>
                 </form>
-                <p className='text-center font-semibold mb-5'>
-                    Don't have an account? <Link to='/auth/register' className='text-blue-500'>Register</Link>
+
+                <div className="my-4 flex items-center justify-center text-white">
+                    <div className="border-b border-white w-full"></div>
+                    <span className="mx-2 text-sm">OR</span>
+                    <div className="border-b border-white w-full"></div>
+                </div>
+
+                <button
+                    onClick={handleGoogle}
+                    className="w-full bg-white text-gray-700 hover:bg-gray-200 transition-colors flex items-center justify-center gap-2 py-2 rounded-lg font-medium"
+                >
+                    <FcGoogle className="text-2xl" /> Login with Google
+                </button>
+
+                <p className="text-white text-sm text-center mt-6">
+                    Don't have an account?{" "}
+                    <Link to="/auth/register" className="underline text-indigo-200 hover:text-white">
+                        Register
+                    </Link>
                 </p>
             </div>
-            <ToastContainer position="top-center" autoClose={5000} />
+            <ToastContainer position="top-center" autoClose={3000} />
         </div>
     );
 };
